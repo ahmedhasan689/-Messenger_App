@@ -13,6 +13,7 @@ class Conversation extends Model
         'user_id',
         'label',
         'last_message_id',
+        'type',
     ];
 
     /**

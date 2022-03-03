@@ -16,6 +16,7 @@ class CreateConversationsTable extends Migration
         Schema::create('conversations', function (Blueprint $table) {
             $table->id();
             $table->string('label')->nullable();
+            $table->enum('type', ['peer', 'group'])->default('peer');
 
             // ForeignId For User
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
