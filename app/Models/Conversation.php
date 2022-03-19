@@ -32,7 +32,7 @@ class Conversation extends Model
     // Relation Message
     public function messages()
     {
-        return $this->hasMany(Message::class, 'conversation_id', 'id')->latest();
+        return $this->hasMany(Message::class, 'conversation_id', 'id');
     }
 
     // Relation With User ( How Created MSG )

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MessengerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('messenger');
-})->middleware(['auth']);
+Route::get('/', function() {
+    return view('auth.login');
+});
+
+
+Route::get('/message/{id?}', [MessengerController::class, 'index'])->middleware(['auth'])->name('messenger');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

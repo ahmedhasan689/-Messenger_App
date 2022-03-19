@@ -22,10 +22,18 @@ class MessagesController extends Controller
     public function index($id)
     {
         $user = Auth::user();
-        $conversation = $user->conversations()->findOrFail($id);
+        $conversation = $user->conversations()->with([
+            'participants' => function ($builder) use ($user) {
+                $builder->where('id', '<>', $user->id);
+            }]
+        )->findOrFail($id);
 
-        return $conversation->messages()->paginate();
+        return [
+            'conversation' => $conversation,
+            'messages' => $conversation->messages()->with('user')->paginate(),
+        ];
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -42,7 +50,7 @@ class MessagesController extends Controller
                     return !$request->input('user_id');
                 }),
                 'int',
-                'exists:conversation,id'
+                'exists:conversations,id'
             ],
             'user_id' => [
                 Rule::requiredIf(function () use ($request) {
@@ -53,7 +61,7 @@ class MessagesController extends Controller
             ],
         ]);
 
-        $user = User::find(1); //Auth::user();
+        $user = Auth::user();
 
         $conversation_id = $request->post('conversation_id');
         $user_id = $request->post('user_id');
@@ -102,6 +110,8 @@ class MessagesController extends Controller
             ]);
 
             DB::commit();
+
+            $message->load('user');
 
             broadcast(new MessageCreated($message));
 

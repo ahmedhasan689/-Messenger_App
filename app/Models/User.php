@@ -42,6 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = [
+        'avatar_url',
+    ];
+
     // Relation With Conversation
     public function conversations()
     {
@@ -65,5 +69,10 @@ class User extends Authenticatable
             'read_at',
             'deleted_at',
         ]);
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        return 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=' . $this->name;
     }
 }
