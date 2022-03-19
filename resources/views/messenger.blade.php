@@ -2262,7 +2262,7 @@
                             method="POST">
                             @csrf
 
-                            <input type="hidden" name="conversation_id" value="{{ $activeChat->id }}">
+                            <input type="hidden" name="conversation_id">
 
                             <div class="row align-items-center gx-0">
                                 <div class="col-auto">
