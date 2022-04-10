@@ -45,7 +45,7 @@
                                     {{ conversation.participants[0].name }}
                                 </h5>
                                 <span
-                                    class="text-muted extra-small ms-2">{{ moment(conversation.last_message.created_at).fromNow() }}
+                                    class="text-muted extra-small ms-2">{{ $root.moment(conversation.last_message.created_at).fromNow() }}
                                 </span>
                             </div>
 
