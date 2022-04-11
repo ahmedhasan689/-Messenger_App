@@ -94,7 +94,9 @@ export default {
             })
                 .then(response => response.json())
                 .then(json => {
-                    this.$parent.messages.push(json);
+                    this.$root.messages.push(json);
+                    let container = document.querySelector('#chat-body');
+                    container.scrollTop = container.scrollHeight
                 })
 
             this.message = "";
