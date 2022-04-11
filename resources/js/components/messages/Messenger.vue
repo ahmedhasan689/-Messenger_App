@@ -33,8 +33,14 @@ export default {
    },
 
    props: [
-       "conversation", "messages"
+       "conversation"
    ],
+
+   data() {
+       return {
+            messages: [],
+       }
+   }
 
 }
 

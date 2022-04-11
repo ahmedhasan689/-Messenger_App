@@ -6,8 +6,7 @@
     <!-- Chat: Files -->
 
     <!-- Chat: Form -->
-    <form class="chat-form rounded-pill bg-dark" action="/api/messages"
-        method="POST">
+    <form class="chat-form rounded-pill bg-dark" action="/api/messages" @submit.prevent="sendMessage()" method="POST">
 
         <input type="hidden" name="_token" :value="$root.csrfToken">
         <input type="hidden" name="conversation_id" :value="conversation ? conversation.id : 0">
@@ -27,7 +26,7 @@
 
             <div class="col">
                 <div class="input-group">
-                    <textarea class="form-control px-0" name="message"
+                    <textarea class="form-control px-0" name="message" v-model="message"
                         placeholder="Type your message..." rows="1" data-emoji-input=""
                         data-autosize="true">
                     </textarea>
@@ -69,6 +68,37 @@
 export default {
     props: [
         'conversation',
-    ]
+    ],
+
+    data() {
+        return {
+            message: 'Enter Your Message .!!',
+        }
+    },
+
+    methods: {
+        sendMessage() {
+            let data = {
+                conversation_id: this.conversation.id,
+                message: this.message,
+                _token: this.$root.csrfToken
+            };
+            fetch('/api/messages', {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(json => {
+                    this.$parent.messages.push(json);
+                })
+
+            this.message = "";
+        }
+    }
 }
 </script>

@@ -2106,7 +2106,7 @@
             <!-- Sidebar -->
 
             <!-- Chat -->
-            <messenger :conversation="conversation" :messages="messages" />
+            <messenger :conversation="conversation" />
             <!-- Chat -->
 
             <!-- Chat: Info -->
